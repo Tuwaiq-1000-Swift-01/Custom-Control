@@ -18,23 +18,17 @@ class Slider : UIControl  {
     
     
     let shapeLayer = CAShapeLayer()
-    
+    var start: Bool = true
     @IBInspectable var color = UIColor.orange
    @IBInspectable var maximumValue : Float = 7
-   @IBInspectable var minimumValue : Float = 1
-    @IBInspectable var value : Float = 0 // {
-//       get {
-//           let diff = CGFloat(maximumValue - minimumValue)
-//           let changevalue = Float(( CGFloat(value) / diff * self.frame.height)) + maximumValue
-//                   drawLine(from : CGPoint(x: (self.frame.width/2) ,
-//                                                y: self.frame.height ),
-//                                 toPoint : CGPoint(x: self.frame.width/2,
-//                                                   y: CGFloat(changevalue)),
-//                                             ofColor : color )
-//                   print("value : \(value)")
-//                   print(formattedValue(value: value))
-//       }
-//    }
+   @IBInspectable var minimumValue : Float = 0
+    @IBInspectable var value : Float = 0  {
+       didSet {
+        if start == true {
+          drawStartLine(value: value, min: minimumValue, max: maximumValue)
+        }
+       }
+   }
     //var stringValue : String = "0"
     
     required init?(coder aDecoder: NSCoder) {
@@ -53,55 +47,65 @@ class Slider : UIControl  {
        // shapeLayer.strokeColor = UIColor.orange.cgColor
         
         self.layer.addSublayer(shapeLayer)
-        
-        let diff = CGFloat(maximumValue - minimumValue)
-
-              value = 5
-        value = Float(( CGFloat(value) / diff * self.frame.height)) + maximumValue
-        drawLine(from : CGPoint(x: (self.frame.width/2) ,
-                                     y: self.frame.height ),
-                      toPoint : CGPoint(x: self.frame.width/2,
-                                        y: CGFloat(value)),
-                                  ofColor : color )
-        print("value : \(value)")
-        print(formattedValue(value: value))
-        
 
     }
-     func drawLine(from start : CGPoint,
-                          toPoint end: CGPoint,
-                          ofColor color :UIColor) {
+        func drawStartLine(value: Float, min: Float, max: Float){
+              print("start", value, max, min)
+           
+             
+                let diff = CGFloat(max - min)
+             
+
+                let setValue = Float(( CGFloat(value) / diff * self.frame.height)) + max
+                 
+                drawLine(from : CGPoint(x: (self.frame.width/2) ,
+                               y: self.frame.height ),
+                       toPoint : CGPoint(x: self.frame.width/2,
+                                y: CGFloat(setValue) - self.frame.height),
+                             ofColor : color )
+                print("set value : \(setValue)")
+                print(formattedValue(value: setValue))
+             
+             
+
+            start = false
+          }
+    private func drawLine(from start : CGPoint,
+                 toPoint end: CGPoint,
+                 ofColor color :UIColor) {
         let path = UIBezierPath()
         path.move(to: start )
         path.addLine(to: end)
         shapeLayer.lineWidth = (self.frame.width )/2
         shapeLayer.path = path.cgPath
         shapeLayer.strokeColor = color.cgColor
-       
-        self.layer.addSublayer(shapeLayer)
         
-    }
+        self.layer.addSublayer(shapeLayer)
+         
+      }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {return }
         let touchPoint = touch.location(in: self)
         if touchPoint.y < 0 || touchPoint.y > self.frame.height{
-            return
+          return
         }
-        
-        
         drawLine(from : CGPoint(x: (self.frame.width/2) ,
-                                y: self.frame.height ),
-                 toPoint : CGPoint(x: self.frame.width/2,
-                                   y: touchPoint.y),
-                 ofColor : UIColor.orange)
-       let diff = maximumValue - minimumValue
+                    y: self.frame.height ),
+             toPoint : CGPoint(x: self.frame.width/2,
+                      y: touchPoint.y),
+             ofColor : UIColor.orange)
+        let diff = maximumValue - minimumValue
         value = maximumValue - Float(touchPoint.y * CGFloat(diff) / self.frame.height)
         print("value : \(touchPoint.y)")
-       // stringValue = formattedValue(value: value)
         print(formattedValue(value: value))
-      //  sendAction(event.)
-       
-    }
+
+        addTarget(self, action: #selector(changeValue), for: .touchUpInside)
+      }
+    @objc func changeValue(){
+      print("ChangeValue: \(value)")
+        sendActions(for: .valueChanged)
+      }
+     
     
     func formattedValue (value : Float) -> String {
         let formatter = NumberFormatter()
