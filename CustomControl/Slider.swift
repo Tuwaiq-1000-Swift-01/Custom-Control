@@ -5,14 +5,13 @@ import UIKit
 
 class Slider: UIControl{
     
-    var delegat: SliderV?
     
     let shapeLayer = CAShapeLayer() // view this class
-    var color = #colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)
+    @IBInspectable var color: UIColor?
+    @IBInspectable var maxValue: Float = 6
+    @IBInspectable var minValue: Float = 0
+    private(set) var value: Float = 0
     
-    @IBInspectable var maxValue: Double = 6
-    @IBInspectable var minValue: Double = 0
-    var value: Double = 0
     
     // to create custom control for me
     required init?(coder aDecoder: NSCoder) {
@@ -45,7 +44,7 @@ class Slider: UIControl{
     override func touchesMoved(_ touches: Set<UITouch>, with: UIEvent?) {
         guard let touch = touches.first else { return }
         let touchPoint = touch.location(in: self)
-
+        
         // to stop if exit from frame view
         if touchPoint.y < 0 || touchPoint.y > self.frame.height {
             return
@@ -56,21 +55,28 @@ class Slider: UIControl{
                           y: frame.height),
             toPoint:CGPoint(x: self.frame.width/2,
                             y: touchPoint.y),
-            ofcolor: color)
+            ofcolor: .cyan)
         
         // Determine the maximum and minimum limits for drawing
         let diff = CGFloat( maxValue - minValue)
-        value = maxValue - Double(touchPoint.y * diff / self.frame.height)
+        value = maxValue - Float(Double(touchPoint.y * diff / self.frame.height))
         
-        self.addTarget(self, action: #selector(sliderDidChangedValue), for: .valueChanged)
+        print(formatteValue(value: value))
+        
         
         
     }
     
-    @objc func sliderDidChangedValue(){
-        delegat?.valuChanged(value: Float((value)))
-
-         }
+    func formatteValue (value : Float) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        
+        let number = NSNumber(value: value)
+        let formatteV = formatter.string(from: number)!
+        
+        return formatteV
+    }
     
     
 }

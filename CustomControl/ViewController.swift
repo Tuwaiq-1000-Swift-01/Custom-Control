@@ -7,30 +7,33 @@
 
 import UIKit
 
-protocol SliderV{
-     func valuChanged(value: Float)
- }
+ 
 
-class ViewController: UIViewController, SliderV {
+class ViewController: UIViewController{
     
     var lable = UILabel()
+    var slider = UISlider()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        view.addSubview(slider)
         view.addSubview(lable)
         lable.text = "Hi"
         lable.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             lable.topAnchor.constraint(equalTo: view.topAnchor, constant: 700),
             lable.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        
         ])
+        
+        slider.addTarget(self, action: #selector(change), for: .touchUpInside)
     }
     
-    func valuChanged(value: Float){
-        lable.text = "\(value)"
-    }
+    @objc func change(_ sender: Slider!) {
+        self.lable.text = sender.formatteValue(value: sender.value)
+        print("done")
+
+         }
     
     
 }
