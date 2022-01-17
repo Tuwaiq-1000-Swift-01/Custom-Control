@@ -18,7 +18,7 @@ class ViewController: UIViewController  {
         label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
         label.center = CGPoint(x: view.frame.midX , y: view.frame.midY + 220)
         label.textAlignment = .center
-      //  label.text = mySlider.stringValue
+        label.text = String(mySlider.value)
         self.view.addSubview(label)
       
         

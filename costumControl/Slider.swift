@@ -9,10 +9,6 @@ import Foundation
 import UIKit
 
 
-
-
-
-
 class Slider : UIControl  {
    
     
@@ -20,7 +16,7 @@ class Slider : UIControl  {
     let shapeLayer = CAShapeLayer()
     var start: Bool = true
     @IBInspectable var color = UIColor.orange
-   @IBInspectable var maximumValue : Float = 7
+   @IBInspectable var maximumValue : Float = 4
    @IBInspectable var minimumValue : Float = 0
     @IBInspectable var value : Float = 0  {
        didSet {
