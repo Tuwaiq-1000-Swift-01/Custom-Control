@@ -4,8 +4,7 @@ import UIKit
 
 
 class Slider: UIControl{
-    
-    
+        
     let shapeLayer = CAShapeLayer() // view this class
     @IBInspectable var color: UIColor?
     @IBInspectable var maxValue: Float = 6
@@ -44,7 +43,7 @@ class Slider: UIControl{
     override func touchesMoved(_ touches: Set<UITouch>, with: UIEvent?) {
         guard let touch = touches.first else { return }
         let touchPoint = touch.location(in: self)
-        
+
         // to stop if exit from frame view
         if touchPoint.y < 0 || touchPoint.y > self.frame.height {
             return
@@ -62,8 +61,6 @@ class Slider: UIControl{
         value = maxValue - Float(Double(touchPoint.y * diff / self.frame.height))
         
         print(formatteValue(value: value))
-        
-        
         
     }
     
