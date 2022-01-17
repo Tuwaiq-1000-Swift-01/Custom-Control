@@ -76,6 +76,7 @@ class Slider : UIControl  {
         shapeLayer.path = path.cgPath
         shapeLayer.strokeColor = color.cgColor
         
+        
         self.layer.addSublayer(shapeLayer)
          
       }
