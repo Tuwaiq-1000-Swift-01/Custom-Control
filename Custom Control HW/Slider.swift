@@ -15,7 +15,7 @@ class Slider: UIControl{
     var delegate : Val?
     @IBInspectable var maximumValue: Float = 7
     @IBInspectable var minimumValue: Float = 1
-    @IBInspectable var value: Float = 0
+    @IBInspectable private (set) var value: Float = 0
     @IBInspectable var cornerRadius : CGFloat {
         get {
             return layer.cornerRadius
@@ -77,7 +77,7 @@ class Slider: UIControl{
                                y: self.frame.height),
                  to: CGPoint(x: self.frame.width/2,
                              y: touchPoint.y),
-                 ofColor: UIColor.lightGray.cgColor)
+                 ofColor: self.Color!.cgColor)
         value = Float(touchPoint.y)
 //        let diff = CGFloat(maximumValue - minimumValue)
 //        value = maximumValue - Float(touchPoint.y * diff / self.frame.height)

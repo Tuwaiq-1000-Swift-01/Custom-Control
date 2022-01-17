@@ -32,6 +32,9 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="20"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="Color">
+                                        <color key="value" red="0.30699911713600159" green="0.93234968185424805" blue="0.88719236850738525" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="onChangeV:" destination="BYZ-38-t0r" eventType="valueChanged" id="9Ok-nr-Drz"/>
