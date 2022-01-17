@@ -37,10 +37,9 @@ class Slider: UIControl {
         NSLayoutConstraint.activate([
             
             
-            valueLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            valueLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            valueLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
-            
+            valueLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 100),
+            valueLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 50),
+            valueLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -50),
         ])
     }
     
@@ -69,6 +68,7 @@ class Slider: UIControl {
         let diff = CGFloat(maximumValue - minimumValue)
         value = maximumValue - Float(touchPoint.y * diff / self.frame.height)
         valueLabel.text = "\(value)"
+        valueLabel.text = String(format: "%.2f", value)
         print(value)
     }
 }
