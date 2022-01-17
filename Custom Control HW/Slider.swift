@@ -24,6 +24,15 @@ class Slider: UIControl{
             layer.cornerRadius = newValue
         }
     }
+    @IBInspectable var Color: UIColor? {
+            get {
+                guard let cgColor = shapeLayer.strokeColor else {
+                    return nil
+                }
+                return UIColor(cgColor: cgColor)
+            }
+            set { shapeLayer.strokeColor = newValue?.cgColor }
+        }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
