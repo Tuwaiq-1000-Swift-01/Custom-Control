@@ -24,20 +24,12 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        DispatchQueue.main.async { [self] in
-//
-//            slideValue.text = String(format: "%.2f", v.value)
-//        }
-//        v.addTarget(self, action: #selector(changeVal), for: .valueChanged)
-//        v.addTarget(self, action: #selector(ViewController.changeVal(_:)), for: .touchDragInside)
+        
     }
-
-//    @objc func changeVal(_ sender: Slider){
-//        print(sender.value)
-//    }
 
     @IBAction func onChangeVal(_ sender: Slider) {
         print(sender.value)
+        slideValue.text = String(format: "%.2f", sender.value)
     }
     
 }
